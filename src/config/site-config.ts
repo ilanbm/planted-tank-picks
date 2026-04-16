@@ -4,7 +4,7 @@ export const siteConfig = {
   tagline: "Straight-answer gear picks for planted aquariums",
   description:
     "Decision-framework guides for planted freshwater aquariums. Filters, heaters, lights, substrate, CO2 — picked by tank size and setup.",
-  amazonAssociateTag: "",
+  amazonAssociateTag: "plantedtankge-20",
   amazonMarketplace: "amazon.com",
   defaultImage: "/og-default.png",
   author: "Planted Tank Picks Editorial",

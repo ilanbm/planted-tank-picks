@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { siteConfig } from "../../config/site-config";
+
+export async function getStaticPaths() {
+  const pillars = await getCollection("pillars");
+  return pillars.map((p: CollectionEntry<"pillars">) => ({
+    params: { slug: p.data.slug },
+    props: { pillar: p },
+  }));
+}
+
+type Props = { pillar: CollectionEntry<"pillars"> };
+const { pillar } = Astro.props;
+const { Content } = await render(pillar);
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: pillar.data.title,
+  description: pillar.data.description,
+  datePublished: pillar.data.updatedAt,
+  dateModified: pillar.data.updatedAt,
+  author: { "@type": "Organization", name: siteConfig.author },
+};
+---
+<BaseLayout
+  title={pillar.data.title}
+  description={pillar.data.description}
+  articleJsonLd={articleJsonLd}
+>
+  <nav class="mb-4 text-sm text-emerald-700">
+    <a href="/" class="underline">Home</a> &rsaquo;
+    <a href="/guides/" class="underline">Guides</a> &rsaquo;
+    <span>{pillar.data.title}</span>
+  </nav>
+  <h1 class="mb-4 text-3xl font-bold text-emerald-900">{pillar.data.title}</h1>
+  <article class="prose prose-emerald">
+    <Content />
+  </article>
+</BaseLayout>

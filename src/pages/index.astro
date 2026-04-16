@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config/site-config";
+---
+<BaseLayout title={siteConfig.siteName} description={siteConfig.description}>
+  <section class="mb-10">
+    <h1 class="mb-2 text-3xl font-bold text-emerald-900">
+      Equipment picks for planted aquariums.
+    </h1>
+    <p class="mb-6 text-lg text-gray-700">
+      No "top 10" padding. No sponsorships. Just straight-answer picks based on
+      your tank size, plants, and fish.
+    </p>
+    <a
+      href="/calculator"
+      class="inline-block rounded bg-emerald-700 px-5 py-3 text-white hover:bg-emerald-800"
+    >
+      Get my setup &rarr;
+    </a>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="mb-3 text-xl font-semibold text-emerald-900">Browse by category</h2>
+    <ul class="grid grid-cols-2 gap-2 text-emerald-800 sm:grid-cols-4">
+      <li><a class="underline" href="/filters/">Filters</a></li>
+      <li><a class="underline" href="/heaters/">Heaters</a></li>
+      <li><a class="underline" href="/lights/">Lights</a></li>
+      <li><a class="underline" href="/substrate/">Substrate</a></li>
+      <li><a class="underline" href="/co2/">CO₂</a></li>
+      <li><a class="underline" href="/testing/">Testing</a></li>
+      <li><a class="underline" href="/plants/">Plants</a></li>
+      <li><a class="underline" href="/accessories/">Accessories</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="mb-3 text-xl font-semibold text-emerald-900">Start here</h2>
+    <ul class="list-disc pl-6 text-emerald-800">
+      <li><a class="underline" href="/guides/starting-a-planted-tank/">Starting a planted tank: complete equipment checklist</a></li>
+      <li><a class="underline" href="/guides/low-tech-planted-tank/">The low-tech planted tank: what you actually need</a></li>
+      <li><a class="underline" href="/guides/nano-shrimp-setup/">Nano shrimp tank setup guide</a></li>
+    </ul>
+  </section>
+</BaseLayout>

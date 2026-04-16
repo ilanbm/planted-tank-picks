@@ -1,0 +1,204 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { products } from "../../data/products";
+import { siteConfig, amazonUrl, amazonSearchUrl } from "../../config/site-config";
+
+export async function getStaticPaths() {
+  const decisions = await getCollection("decisions");
+  return decisions.map((d: CollectionEntry<"decisions">) => ({
+    params: { category: d.data.category, slug: d.data.slug },
+    props: { decision: d },
+  }));
+}
+
+type Props = { decision: CollectionEntry<"decisions"> };
+const { decision } = Astro.props;
+const { Content } = await render(decision);
+
+const picks = decision.data.productIds
+  .map((id) => products.find((p) => p.id === id))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+const linkFor = (p: (typeof products)[number]) =>
+  p.asin.startsWith("SEARCH:")
+    ? amazonSearchUrl(p.asin.slice("SEARCH:".length))
+    : amazonUrl(p.asin);
+
+const allDecisions = await getCollection("decisions");
+const siblings = allDecisions.filter((d) =>
+  decision.data.siblingSlugs.includes(d.data.slug),
+);
+
+const faqJsonLd = decision.data.faqs.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: decision.data.faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    }
+  : undefined;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: decision.data.h1,
+  description: decision.data.description,
+  datePublished: decision.data.updatedAt,
+  dateModified: decision.data.updatedAt,
+  author: { "@type": "Organization", name: siteConfig.author },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: `https://${siteConfig.domain}/` },
+    { "@type": "ListItem", position: 2, name: decision.data.category, item: `https://${siteConfig.domain}/${decision.data.category}/` },
+    { "@type": "ListItem", position: 3, name: decision.data.h1, item: `https://${siteConfig.domain}/${decision.data.category}/${decision.data.slug}/` },
+  ],
+};
+---
+<BaseLayout
+  title={decision.data.title}
+  description={decision.data.description}
+  articleJsonLd={articleJsonLd}
+  faqJsonLd={faqJsonLd}
+  breadcrumbJsonLd={breadcrumbJsonLd}
+>
+  <nav class="mb-4 text-sm text-emerald-700">
+    <a href="/" class="underline">Home</a> &rsaquo;
+    <a href={`/${decision.data.category}/`} class="underline capitalize">
+      {decision.data.category}
+    </a> &rsaquo;
+    <span>{decision.data.h1}</span>
+  </nav>
+
+  <h1 class="mb-4 text-3xl font-bold text-emerald-900">{decision.data.h1}</h1>
+
+  <p class="mb-2 text-xs italic text-gray-500">
+    As an Amazon Associate we earn from qualifying purchases.
+  </p>
+
+  <section class="mb-6 rounded border border-emerald-200 bg-emerald-50 p-4">
+    <h2 class="mb-2 text-lg font-semibold text-emerald-900">Quick picks</h2>
+    <ol class="list-decimal pl-5">
+      {picks.slice(0, 3).map((p) => (
+        <li class="mb-2">
+          <strong>{p.name}</strong> — {p.shortPitch}
+          <br />
+          <a
+            href={linkFor(p)}
+            target="_blank"
+            rel="sponsored nofollow noopener"
+            class="text-emerald-800 underline"
+          >
+            See on Amazon &rarr;
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="mb-6">
+    <h2 class="mb-3 text-xl font-semibold text-emerald-900">Comparison</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-sm">
+        <thead class="bg-emerald-100">
+          <tr>
+            <th class="border p-2 text-left">Product</th>
+            <th class="border p-2 text-left">Price band</th>
+            <th class="border p-2 text-left">Key spec</th>
+            <th class="border p-2 text-left">Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          {picks.map((p) => {
+            const firstSpec = Object.entries(p.specs)[0];
+            return (
+              <tr>
+                <td class="border p-2 font-medium">{p.name}</td>
+                <td class="border p-2">{p.priceBand}</td>
+                <td class="border p-2">
+                  {firstSpec ? `${firstSpec[0]}: ${firstSpec[1]}` : "—"}
+                </td>
+                <td class="border p-2">
+                  {p.fits.tankSizeMinGal ?? "—"}–{p.fits.tankSizeMaxGal ?? "—"} gal
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="mb-6">
+    <h2 class="mb-3 text-xl font-semibold text-emerald-900">Which one for you?</h2>
+    <ul class="space-y-2">
+      {decision.data.decisionTree.map((branch) => {
+        const p = products.find((x) => x.id === branch.pick);
+        return (
+          <li>
+            <strong>If</strong> {branch.condition} &rarr;{" "}
+            {p ? (
+              <a
+                class="text-emerald-800 underline"
+                href={linkFor(p)}
+                target="_blank"
+                rel="sponsored nofollow noopener"
+              >
+                {p.name}
+              </a>
+            ) : (
+              <span>{branch.pick}</span>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </section>
+
+  <article class="prose prose-emerald mb-6">
+    <Content />
+  </article>
+
+  {decision.data.faqs.length > 0 && (
+    <section class="mb-6">
+      <h2 class="mb-3 text-xl font-semibold text-emerald-900">FAQ</h2>
+      <dl>
+        {decision.data.faqs.map((f) => (
+          <div class="mb-3">
+            <dt class="font-semibold">{f.q}</dt>
+            <dd class="text-gray-700">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  )}
+
+  {siblings.length > 0 && (
+    <section class="mb-6">
+      <h2 class="mb-3 text-xl font-semibold text-emerald-900">Related picks</h2>
+      <ul class="list-disc pl-6">
+        {siblings.map((s) => (
+          <li>
+            <a
+              class="text-emerald-800 underline"
+              href={`/${s.data.category}/${s.data.slug}/`}
+            >
+              {s.data.h1}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <p class="text-xs text-gray-500">
+    Last updated {new Date(decision.data.updatedAt).toLocaleDateString()}.
+  </p>
+</BaseLayout>

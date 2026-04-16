@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config/site-config";
+---
+<BaseLayout
+  title="Privacy"
+  description={`${siteConfig.siteName} privacy policy.`}
+>
+  <h1 class="mb-4 text-3xl font-bold text-emerald-900">Privacy</h1>
+  <div class="prose prose-emerald">
+    <p>
+      {siteConfig.siteName} is a static website. We do not run our own analytics,
+      we do not set tracking cookies, and we do not collect email addresses.
+    </p>
+    <p>
+      Our hosting provider (Cloudflare Pages) collects aggregate request metrics
+      (country, device type, response status) as part of its service. We do not
+      have access to individual visitor identities.
+    </p>
+    <p>
+      Product links on this site point to Amazon.com. Amazon's privacy policy
+      governs any data collected after you click through. We pass a partner tag
+      that identifies our site as the referring source; we do not receive
+      identifying information about specific purchases.
+    </p>
+  </div>
+</BaseLayout>

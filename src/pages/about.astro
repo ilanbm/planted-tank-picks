@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config/site-config";
+---
+<BaseLayout
+  title="About"
+  description={`About ${siteConfig.siteName} — who we are and how we pick products.`}
+>
+  <h1 class="mb-4 text-3xl font-bold text-emerald-900">About</h1>
+  <div class="prose prose-emerald">
+    <p>
+      {siteConfig.siteName} publishes equipment decision guides for planted
+      freshwater aquariums. Our approach is opinionated and narrow: we focus on
+      gear that matters for planted tanks, we compare products against specific
+      tank setups (size, planting density, livestock), and we avoid the padded
+      "top 10" format.
+    </p>
+    <h2>How we pick</h2>
+    <p>
+      Picks draw on published specifications, hobbyist community consensus from
+      forums like r/PlantedTank and the Barr Report, long-run reputation across
+      brands, and product fit against the specific use case described on each
+      page. We do not receive products for review and we are not sponsored.
+    </p>
+    <p>
+      We participate in the Amazon Associates program. When you buy through
+      links on this site, we earn a small commission at no cost to you. This
+      does not change our picks — it pays for the time to keep them up to date.
+    </p>
+    <h2>Limitations</h2>
+    <p>
+      We don't hands-on test every product. Specifications are drawn from
+      manufacturer sources, which occasionally overstate performance (flow
+      rates, especially). Use our picks as a starting point, read the product's
+      own documentation, and measure parameters in your own tank.
+    </p>
+    <h2>Contact</h2>
+    <p>Email corrections to <em>corrections@{siteConfig.domain}</em>.</p>
+  </div>
+</BaseLayout>

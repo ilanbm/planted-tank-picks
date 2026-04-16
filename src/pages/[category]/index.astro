@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { siteConfig } from "../../config/site-config";
+
+export async function getStaticPaths() {
+  const categories = await getCollection("categories");
+  return categories.map((c: CollectionEntry<"categories">) => ({
+    params: { category: c.data.slug },
+    props: { category: c },
+  }));
+}
+
+type Props = { category: CollectionEntry<"categories"> };
+const { category } = Astro.props;
+const { Content } = await render(category);
+
+const decisions = await getCollection("decisions", (d) =>
+  d.data.category === category.data.slug,
+);
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: `https://${siteConfig.domain}/` },
+    { "@type": "ListItem", position: 2, name: category.data.title, item: `https://${siteConfig.domain}/${category.data.slug}/` },
+  ],
+};
+---
+<BaseLayout
+  title={category.data.title}
+  description={category.data.description}
+  breadcrumbJsonLd={breadcrumbJsonLd}
+>
+  <nav class="mb-4 text-sm text-emerald-700">
+    <a href="/" class="underline">Home</a> &rsaquo; <span>{category.data.title}</span>
+  </nav>
+
+  <h1 class="mb-3 text-3xl font-bold text-emerald-900">{category.data.title}</h1>
+  <p class="mb-6 text-lg text-gray-700">{category.data.intro}</p>
+
+  <article class="prose prose-emerald mb-8">
+    <Content />
+  </article>
+
+  <section>
+    <h2 class="mb-3 text-xl font-semibold text-emerald-900">Decision guides</h2>
+    {decisions.length === 0 ? (
+      <p class="text-gray-600">Decision guides publishing soon.</p>
+    ) : (
+      <ul class="list-disc pl-6">
+        {decisions.map((d) => (
+          <li>
+            <a
+              class="text-emerald-800 underline"
+              href={`/${d.data.category}/${d.data.slug}/`}
+            >
+              {d.data.h1}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</BaseLayout>

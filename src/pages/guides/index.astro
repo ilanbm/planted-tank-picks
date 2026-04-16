@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+const pillars = await getCollection("pillars");
+---
+<BaseLayout
+  title="Planted Tank Guides"
+  description="Deep-dive guides to starting, running, and troubleshooting planted freshwater aquariums."
+>
+  <h1 class="mb-4 text-3xl font-bold text-emerald-900">Guides</h1>
+  <ul class="list-disc pl-6">
+    {pillars.map((p) => (
+      <li class="mb-2">
+        <a class="text-emerald-800 underline" href={`/guides/${p.data.slug}/`}>
+          {p.data.title}
+        </a>
+        <div class="text-sm text-gray-600">{p.data.description}</div>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

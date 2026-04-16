@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config/site-config";
+---
+<BaseLayout
+  title="Affiliate Disclosure"
+  description="How we earn a commission on qualifying purchases."
+>
+  <h1 class="mb-4 text-3xl font-bold text-emerald-900">Affiliate Disclosure</h1>
+  <div class="prose prose-emerald">
+    <p>
+      {siteConfig.siteName} is a participant in the Amazon Services LLC
+      Associates Program, an affiliate advertising program designed to provide
+      a means for sites to earn advertising fees by advertising and linking to
+      Amazon.com.
+    </p>
+    <p>
+      Some product links on this site are affiliate links. If you click one
+      and make a qualifying purchase, we may earn a commission at no additional
+      cost to you. We only recommend products we believe will help the reader's
+      specific situation as described on the page. Affiliate commission does
+      not factor into which product wins our pick.
+    </p>
+    <p>
+      In compliance with FTC guidelines, this disclosure appears in the footer
+      of every page, on this dedicated page, and within product recommendation
+      sections.
+    </p>
+  </div>
+</BaseLayout>

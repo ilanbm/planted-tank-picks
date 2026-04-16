@@ -1,0 +1,25 @@
+---
+import { siteConfig } from "../config/site-config";
+const year = new Date().getFullYear();
+---
+<footer class="mt-16 border-t border-emerald-100 bg-emerald-50">
+  <div class="mx-auto max-w-5xl px-4 py-8 text-sm text-emerald-900">
+    <p class="mb-3">
+      <strong>{siteConfig.siteName}</strong> is a participant in the Amazon
+      Services LLC Associates Program, an affiliate advertising program designed
+      to provide a means for sites to earn advertising fees by advertising and
+      linking to Amazon.com. As an Amazon Associate we earn from qualifying
+      purchases.
+    </p>
+    <nav class="flex flex-wrap gap-4">
+      <a href="/about/" class="underline">About</a>
+      <a href="/affiliate-disclosure/" class="underline">Affiliate Disclosure</a>
+      <a href="/privacy/" class="underline">Privacy</a>
+    </nav>
+    <p class="mt-4 text-xs text-emerald-700">
+      &copy; {year} {siteConfig.siteName}. Product picks reflect editorial
+      judgment; we do not test every product personally and update picks
+      periodically.
+    </p>
+  </div>
+</footer>

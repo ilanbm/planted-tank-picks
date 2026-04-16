@@ -1,6 +1,6 @@
 export const siteConfig = {
-  domain: "example.com",
-  siteName: "Planted Tank Picks",
+  domain: "www.plantedtankgear.com",
+  siteName: "Planted Tank Gear",
   tagline: "Straight-answer gear picks for planted aquariums",
   description:
     "Decision-framework guides for planted freshwater aquariums. Filters, heaters, lights, substrate, CO2 — picked by tank size and setup.",

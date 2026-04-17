@@ -1,7 +1,7 @@
 export const siteConfig = {
   domain: "www.plantedtankgear.com",
   siteName: "Planted Tank Gear",
-  tagline: "Straight-answer gear picks for planted aquariums",
+  tagline: "Gear guides for planted freshwater aquariums",
   description:
     "Decision-framework guides for planted freshwater aquariums. Filters, heaters, lights, substrate, CO2 — picked by tank size and setup.",
   amazonAssociateTag: "plantedtankge-20",

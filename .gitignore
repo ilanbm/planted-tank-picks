@@ -3,3 +3,8 @@ dist/
 .astro/
 .DS_Store
 *.log
+
+# Environment variables (API keys etc. — never commit)
+.env
+.env.*
+!.env.example

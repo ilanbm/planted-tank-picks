@@ -1,1 +1,265 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ==========================================================================
+   Design tokens — Planted Tank Gear
+   Inspired by: editorial magazines, botanical illustration, aquascape calm
+   ========================================================================== */
+
+@theme {
+  /* Typography */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Color palette — warm, earthy, calm */
+  --color-ink-900: #131c19;      /* deep moss, primary text */
+  --color-ink-700: #2f3f3a;      /* muted forest */
+  --color-ink-500: #5b6f68;      /* stem text */
+  --color-ink-300: #9cab9f;      /* hairline */
+
+  --color-cream-50: #fbf8f2;     /* warm background */
+  --color-cream-100: #f5efe4;    /* card elevated */
+  --color-cream-200: #eae0cd;    /* divider / decorative */
+
+  --color-moss-500: #3e7355;     /* primary brand */
+  --color-moss-600: #2d5a42;     /* brand hover */
+  --color-moss-700: #1f4230;     /* darkest moss */
+  --color-moss-100: #e6efe9;     /* subtle moss tint */
+
+  --color-coral-500: #d9664c;    /* accent / CTA — kept sparingly */
+  --color-coral-600: #bf4e35;    /* CTA hover */
+
+  --color-water-100: #e8f0f0;    /* soft water cyan */
+  --color-water-500: #5a8a91;    /* water depth */
+
+  /* Spacing rhythm (editorial) */
+  --space-hairline: 1px;
+  --space-editorial: 4.5rem;     /* section gap */
+
+  /* Radii */
+  --radius-card: 12px;
+  --radius-pill: 999px;
+}
+
+/* Import webfonts */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap");
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  html {
+    font-family: var(--font-body);
+    color: var(--color-ink-900);
+    background: var(--color-cream-50);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-feature-settings: "ss01", "cv02", "cv03";
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.018em;
+    line-height: 1.12;
+    color: var(--color-ink-900);
+  }
+
+  h1 {
+    font-variation-settings: "opsz" 144;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-variation-settings: "opsz" 48;
+  }
+
+  h3 {
+    font-variation-settings: "opsz" 24;
+    font-weight: 500;
+  }
+
+  p {
+    line-height: 1.65;
+    color: var(--color-ink-700);
+  }
+
+  a {
+    transition: color 180ms ease, border-color 180ms ease;
+  }
+
+  ::selection {
+    background: var(--color-moss-100);
+    color: var(--color-ink-900);
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-body { font-family: var(--font-body); }
+
+  .text-ink-900 { color: var(--color-ink-900); }
+  .text-ink-700 { color: var(--color-ink-700); }
+  .text-ink-500 { color: var(--color-ink-500); }
+  .text-ink-300 { color: var(--color-ink-300); }
+
+  .bg-cream-50 { background-color: var(--color-cream-50); }
+  .bg-cream-100 { background-color: var(--color-cream-100); }
+  .bg-cream-200 { background-color: var(--color-cream-200); }
+
+  .text-moss-500 { color: var(--color-moss-500); }
+  .text-moss-600 { color: var(--color-moss-600); }
+  .text-moss-700 { color: var(--color-moss-700); }
+  .bg-moss-500 { background-color: var(--color-moss-500); }
+  .bg-moss-600 { background-color: var(--color-moss-600); }
+  .bg-moss-700 { background-color: var(--color-moss-700); }
+  .bg-moss-100 { background-color: var(--color-moss-100); }
+  .border-moss-500 { border-color: var(--color-moss-500); }
+
+  .text-coral-500 { color: var(--color-coral-500); }
+  .bg-coral-500 { background-color: var(--color-coral-500); }
+  .bg-coral-600 { background-color: var(--color-coral-600); }
+
+  .bg-water-100 { background-color: var(--color-water-100); }
+  .text-water-500 { color: var(--color-water-500); }
+
+  .rule-hair {
+    border-top: 1px solid var(--color-cream-200);
+  }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-moss-600);
+  }
+
+  /* Editorial drop-cap for long-form intro paragraphs */
+  .drop-cap::first-letter {
+    font-family: var(--font-display);
+    float: left;
+    font-size: 4.5rem;
+    line-height: 0.85;
+    margin: 0.25rem 0.5rem -0.25rem 0;
+    color: var(--color-moss-600);
+    font-variation-settings: "opsz" 144;
+    font-weight: 500;
+  }
+
+  /* Subtle grain overlay for depth (applied via background-image) */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 180px 180px;
+  }
+
+  /* Gentle ring focus for accessibility */
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--color-moss-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.005em;
+    border-radius: var(--radius-pill);
+    transition: background-color 200ms ease, transform 120ms ease, box-shadow 200ms ease;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--color-ink-900);
+    color: var(--color-cream-50);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-moss-700);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px -10px rgba(31, 66, 48, 0.55);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink-900);
+    border: 1px solid var(--color-ink-300);
+  }
+
+  .btn-ghost:hover {
+    background: var(--color-cream-100);
+  }
+
+  /* Editorial link style — underline with hover lift */
+  .link-editorial {
+    color: var(--color-ink-900);
+    background-image: linear-gradient(var(--color-ink-900), var(--color-ink-900));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+  }
+
+  .link-editorial:hover {
+    color: var(--color-moss-600);
+    background-image: linear-gradient(var(--color-moss-600), var(--color-moss-600));
+  }
+
+  /* Card surface */
+  .surface {
+    background: var(--color-cream-50);
+    border: 1px solid var(--color-cream-200);
+    border-radius: var(--radius-card);
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 250ms ease;
+  }
+
+  .surface-hover:hover {
+    border-color: var(--color-moss-500);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -24px rgba(19, 28, 25, 0.18);
+  }
+
+  .surface-elevated {
+    background: #ffffff;
+    border: 1px solid var(--color-cream-200);
+    border-radius: var(--radius-card);
+    box-shadow: 0 1px 2px rgba(19, 28, 25, 0.04), 0 4px 24px -12px rgba(19, 28, 25, 0.08);
+  }
+
+  /* Decorative small-caps label */
+  .smallcaps {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+}

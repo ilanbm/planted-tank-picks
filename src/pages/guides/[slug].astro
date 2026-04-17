@@ -24,19 +24,53 @@ const articleJsonLd = {
   dateModified: pillar.data.updatedAt,
   author: { "@type": "Organization", name: siteConfig.author },
 };
+
+const formattedDate = new Date(pillar.data.updatedAt).toLocaleDateString("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
 ---
 <BaseLayout
   title={pillar.data.title}
   description={pillar.data.description}
   articleJsonLd={articleJsonLd}
 >
-  <nav class="mb-4 text-sm text-emerald-700">
-    <a href="/" class="underline">Home</a> &rsaquo;
-    <a href="/guides/" class="underline">Guides</a> &rsaquo;
-    <span>{pillar.data.title}</span>
+  <nav aria-label="Breadcrumb" class="mb-8 text-[0.82rem] text-ink-500">
+    <ol class="flex flex-wrap items-center gap-2">
+      <li><a href="/" class="link-editorial">Home</a></li>
+      <li aria-hidden="true" class="text-ink-300">/</li>
+      <li><a href="/guides/" class="link-editorial">Guides</a></li>
+      <li aria-hidden="true" class="text-ink-300">/</li>
+      <li class="text-ink-500">{pillar.data.title}</li>
+    </ol>
   </nav>
-  <h1 class="mb-4 text-3xl font-bold text-emerald-900">{pillar.data.title}</h1>
-  <article class="prose prose-emerald">
+
+  <header>
+    <div class="flex items-center gap-3">
+      <span class="inline-flex h-1.5 w-6 rounded-full bg-moss-500"></span>
+      <span class="eyebrow">Long-form guide</span>
+    </div>
+    <h1 class="mt-5 text-[2.5rem] leading-[1.05] md:text-[3.25rem]">
+      {pillar.data.title}
+    </h1>
+    <p class="mt-4 text-lg leading-relaxed text-ink-700">
+      {pillar.data.description}
+    </p>
+    <p class="mt-6 text-[0.78rem] text-ink-500">Updated {formattedDate}</p>
+  </header>
+
+  <article class="prose prose-lg mt-12 max-w-none text-ink-900
+    prose-headings:font-display prose-headings:tracking-tight
+    prose-h2:text-[1.85rem] prose-h2:mt-14 prose-h2:mb-4
+    prose-h3:text-[1.3rem] prose-h3:mt-10 prose-h3:mb-3
+    prose-p:text-ink-700 prose-p:leading-relaxed
+    prose-a:text-moss-700 prose-a:no-underline hover:prose-a:text-moss-600
+    prose-strong:text-ink-900 prose-strong:font-semibold
+    prose-ul:text-ink-700 prose-li:my-1
+    prose-ol:text-ink-700
+    first-of-type:prose-p:drop-cap first-of-type:prose-p:text-[1.1rem]"
+  >
     <Content />
   </article>
 </BaseLayout>

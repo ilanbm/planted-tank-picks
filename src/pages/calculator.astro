@@ -1,76 +1,235 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const tankSizes = [
+  { value: 5,   label: "5",   detail: "nano" },
+  { value: 10,  label: "10",  detail: "nano" },
+  { value: 20,  label: "20",  detail: "sweet spot", preferred: true },
+  { value: 29,  label: "29",  detail: "midsize" },
+  { value: 40,  label: "40",  detail: "midsize" },
+  { value: 55,  label: "55",  detail: "large" },
+  { value: 75,  label: "75",  detail: "large" },
+  { value: 125, label: "125+", detail: "big" },
+];
+
+const plantingOptions = [
+  { value: "low",    label: "Low-tech",    desc: "No CO₂, slow growers" },
+  { value: "medium", label: "Medium-tech", desc: "Liquid carbon, mixed plants" },
+  { value: "high",   label: "High-tech",   desc: "CO₂ injected, demanding" },
+];
+
+const livestockOptions = [
+  { value: "community",    label: "Community",    desc: "Tetras, rasboras, corydoras" },
+  { value: "shrimp",       label: "Shrimp",       desc: "Neocaridina, Caridina" },
+  { value: "betta",        label: "Betta",        desc: "Solo or with peaceful tankmates" },
+  { value: "cichlid",      label: "Cichlid",      desc: "Apistogramma, rams, angelfish" },
+  { value: "species-only", label: "Species-only", desc: "Single-species focus" },
+];
+
+const experienceOptions = [
+  { value: "first",        label: "First tank",      desc: "Starting out" },
+  { value: "some",         label: "Some experience", desc: "A few tanks under the belt" },
+  { value: "experienced",  label: "Experienced",     desc: "Years in the hobby" },
+];
 ---
 <BaseLayout
   title="Planted Tank Setup Calculator"
-  description="Enter your tank size, planting level, livestock, and experience. Get a full equipment list recommended for your exact setup."
+  description="Four questions. A full equipment setup for your exact tank — filter, heater, light, substrate, CO₂, and test kit."
+  width="wide"
 >
-  <h1 class="mb-2 text-3xl font-bold text-emerald-900">
-    Planted Tank Setup Calculator
-  </h1>
-  <p class="mb-6 text-gray-700">
-    Answer four questions. We'll recommend a filter, heater, light, substrate,
-    test kit, and (if applicable) CO₂ setup for your tank.
-  </p>
+  <!-- ==========================================================================
+       HERO BAND
+       ========================================================================== -->
+  <section class="relative border-b border-cream-200 bg-cream-100 py-14 md:py-20">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex h-1.5 w-6 rounded-full bg-moss-500"></span>
+        <span class="eyebrow">The setup calculator</span>
+      </div>
+      <h1 class="mt-5 text-[2.5rem] leading-[1.05] md:text-[3.5rem]">
+        Four questions.
+        <span class="italic text-moss-600" style="font-variation-settings: 'opsz' 144;">One</span>
+        setup.
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ink-700">
+        Tell us about your tank. We'll build a full, opinionated gear list —
+        filter, heater, light, substrate, CO₂ (if you need it), and test kit.
+        Each pick comes with a one-line reason.
+      </p>
+    </div>
+  </section>
 
-  <form id="calc-form" class="space-y-4 rounded border border-emerald-200 p-4">
-    <label class="block">
-      <span class="mb-1 block font-medium">Tank size (gallons)</span>
-      <select name="tankSizeGal" class="w-full rounded border-gray-300">
-        <option value="5">5 gallons</option>
-        <option value="10">10 gallons</option>
-        <option value="20" selected>20 gallons</option>
-        <option value="29">29 gallons</option>
-        <option value="40">40 gallons</option>
-        <option value="55">55 gallons</option>
-        <option value="75">75 gallons</option>
-        <option value="125">125+ gallons</option>
-      </select>
-    </label>
+  <!-- ==========================================================================
+       FORM
+       ========================================================================== -->
+  <section class="mx-auto max-w-4xl px-6 py-14 md:py-20">
+    <form id="calc-form" class="space-y-14">
+      <!-- Q1 Tank Size -->
+      <fieldset>
+        <div class="flex items-baseline gap-3">
+          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">01</span>
+          <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
+            How big is your tank?
+          </legend>
+        </div>
+        <p class="mt-2 ml-10 text-sm text-ink-500">In US gallons.</p>
 
-    <label class="block">
-      <span class="mb-1 block font-medium">Planting level</span>
-      <select name="planting" class="w-full rounded border-gray-300">
-        <option value="low">Low-tech (no CO₂, slow growers)</option>
-        <option value="medium" selected>Medium-tech (liquid carbon, mixed plants)</option>
-        <option value="high">High-tech (CO₂ injected, demanding plants)</option>
-      </select>
-    </label>
+        <div class="mt-6 ml-10 grid grid-cols-4 gap-2 md:grid-cols-8">
+          {tankSizes.map((t, i) => (
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="tankSizeGal"
+                value={t.value}
+                class="peer sr-only"
+                checked={t.preferred}
+              />
+              <div class="flex flex-col items-center justify-center rounded-xl border border-cream-200 bg-cream-50 px-2 py-4 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-moss-500 peer-focus-visible:ring-offset-2">
+                <div class="font-display text-xl text-ink-900" style="font-variation-settings: 'opsz' 24;">
+                  {t.label}
+                </div>
+                <div class="mt-1 text-[0.65rem] uppercase tracking-wider text-ink-500">
+                  {t.detail}
+                </div>
+              </div>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
-    <label class="block">
-      <span class="mb-1 block font-medium">Livestock</span>
-      <select name="livestock" class="w-full rounded border-gray-300">
-        <option value="community" selected>Community tropical</option>
-        <option value="shrimp">Shrimp</option>
-        <option value="betta">Betta</option>
-        <option value="cichlid">Cichlid</option>
-        <option value="species-only">Species-only</option>
-      </select>
-    </label>
+      <div class="rule-hair"></div>
 
-    <label class="block">
-      <span class="mb-1 block font-medium">Experience</span>
-      <select name="experience" class="w-full rounded border-gray-300">
-        <option value="first">First tank</option>
-        <option value="some" selected>Some experience</option>
-        <option value="experienced">Experienced</option>
-      </select>
-    </label>
+      <!-- Q2 Planting -->
+      <fieldset>
+        <div class="flex items-baseline gap-3">
+          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">02</span>
+          <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
+            How planted is it?
+          </legend>
+        </div>
+        <p class="mt-2 ml-10 text-sm text-ink-500">The more plants, the more light and (often) CO₂ you'll want.</p>
 
-    <button
-      type="submit"
-      class="rounded bg-emerald-700 px-5 py-2 text-white hover:bg-emerald-800"
-    >
-      Get my setup
-    </button>
-  </form>
+        <div class="mt-6 ml-10 grid gap-3 md:grid-cols-3">
+          {plantingOptions.map((o, i) => (
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="planting"
+                value={o.value}
+                class="peer sr-only"
+                checked={o.value === "medium"}
+              />
+              <div class="rounded-xl border border-cream-200 bg-cream-50 p-5 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm">
+                <div class="font-display text-lg text-ink-900" style="font-variation-settings: 'opsz' 24;">
+                  {o.label}
+                </div>
+                <div class="mt-1 text-sm text-ink-500">{o.desc}</div>
+              </div>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
-  <section id="results" class="mt-8 hidden">
-    <h2 class="mb-3 text-2xl font-semibold text-emerald-900">Your recommended setup</h2>
-    <div id="results-body"></div>
-    <p class="mt-4 text-xs text-gray-500">
-      As an Amazon Associate we earn from qualifying purchases.
-    </p>
+      <div class="rule-hair"></div>
+
+      <!-- Q3 Livestock -->
+      <fieldset>
+        <div class="flex items-baseline gap-3">
+          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">03</span>
+          <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
+            What lives in there?
+          </legend>
+        </div>
+        <p class="mt-2 ml-10 text-sm text-ink-500">Shrimp need intake protection. Bettas want calm water. Cichlids push bigger filters.</p>
+
+        <div class="mt-6 ml-10 grid gap-3 md:grid-cols-5">
+          {livestockOptions.map((o) => (
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="livestock"
+                value={o.value}
+                class="peer sr-only"
+                checked={o.value === "community"}
+              />
+              <div class="h-full rounded-xl border border-cream-200 bg-cream-50 p-4 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm">
+                <div class="font-display text-[1.05rem] text-ink-900" style="font-variation-settings: 'opsz' 24;">
+                  {o.label}
+                </div>
+                <div class="mt-1 text-[0.8rem] leading-snug text-ink-500">{o.desc}</div>
+              </div>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="rule-hair"></div>
+
+      <!-- Q4 Experience -->
+      <fieldset>
+        <div class="flex items-baseline gap-3">
+          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">04</span>
+          <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
+            How experienced are you?
+          </legend>
+        </div>
+        <p class="mt-2 ml-10 text-sm text-ink-500">We steer beginners toward reliability, experienced keepers toward upside.</p>
+
+        <div class="mt-6 ml-10 grid gap-3 md:grid-cols-3">
+          {experienceOptions.map((o) => (
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="experience"
+                value={o.value}
+                class="peer sr-only"
+                checked={o.value === "some"}
+              />
+              <div class="rounded-xl border border-cream-200 bg-cream-50 p-5 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm">
+                <div class="font-display text-lg text-ink-900" style="font-variation-settings: 'opsz' 24;">
+                  {o.label}
+                </div>
+                <div class="mt-1 text-sm text-ink-500">{o.desc}</div>
+              </div>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="pt-4">
+        <button type="submit" class="btn btn-primary text-[0.95rem]" style="padding: 0.95rem 1.75rem;">
+          Build my setup
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ==========================================================================
+       RESULTS
+       ========================================================================== -->
+  <section id="results" class="hidden border-t border-cream-200 bg-cream-100 py-14 md:py-20">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-baseline justify-between gap-4">
+        <div>
+          <div class="eyebrow">Your recommended setup</div>
+          <h2 class="mt-2 text-[2rem] leading-tight md:text-[2.5rem]">
+            Here's what we'd buy.
+          </h2>
+        </div>
+        <p id="results-summary" class="hidden text-right text-sm text-ink-500 md:block"></p>
+      </div>
+
+      <div id="results-body" class="mt-10 grid gap-4"></div>
+
+      <div id="results-notes" class="mt-8"></div>
+
+      <p class="mt-10 text-center text-[0.75rem] text-ink-500">
+        As an Amazon Associate we earn from qualifying purchases.
+      </p>
+    </div>
   </section>
 
   <script>
@@ -81,10 +240,24 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     const form = document.getElementById("calc-form") as HTMLFormElement | null;
     const results = document.getElementById("results") as HTMLElement | null;
     const body = document.getElementById("results-body") as HTMLElement | null;
+    const notes = document.getElementById("results-notes") as HTMLElement | null;
+    const summary = document.getElementById("results-summary") as HTMLElement | null;
+
+    function categoryIcon(label: string): string {
+      const icons: Record<string, string> = {
+        Filter:    '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l-1 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 4Z"/><path d="M8 8h8M9 12h6M10 16h4"/></svg>',
+        Heater:    '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><circle cx="12" cy="18" r="3"/></svg>',
+        Light:     '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>',
+        Substrate: '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18M3 17l3-4 3 3 4-5 4 4 4-3v5"/></svg>',
+        "CO₂":     '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="17" r="2"/><circle cx="12" cy="12" r="1.5"/><circle cx="17" cy="7" r="2.5"/></svg>',
+        Testing:   '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v5l4 10a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-10V3Z"/><path d="M9 11h6"/></svg>',
+      };
+      return icons[label] ?? "";
+    }
 
     form?.addEventListener("submit", (e) => {
       e.preventDefault();
-      if (!results || !body) return;
+      if (!results || !body || !notes || !summary) return;
       const data = new FormData(form);
       const input = {
         tankSizeGal: Number(data.get("tankSizeGal")),
@@ -94,41 +267,81 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         experience: data.get("experience") as "first" | "some" | "experienced",
       };
       const r = recommend(input);
+
+      // Summary line
+      const livestockLabel: Record<string, string> = {
+        community: "community fish", shrimp: "shrimp", betta: "a betta",
+        cichlid: "cichlids", "species-only": "a species-only build",
+      };
+      const plantingLabel: Record<string, string> = {
+        low: "low-tech", medium: "medium-tech", high: "high-tech",
+      };
+      summary.textContent = `${input.tankSizeGal}-gal · ${plantingLabel[input.planting]} · ${livestockLabel[input.livestock]}`;
+      summary.classList.remove("hidden");
+
       const rows: string[] = [];
-      const pushRow = (label: string, p: Product | null) => {
+      const makeCard = (label: string, p: Product | null) => {
         if (!p) return;
         const href = p.asin.startsWith("SEARCH:")
           ? amazonSearchUrl(p.asin.slice("SEARCH:".length))
           : amazonUrl(p.asin);
-        rows.push(
-          '<div class="mb-3 rounded border border-emerald-100 p-3">' +
-            '<div class="text-sm uppercase tracking-wide text-emerald-700">' + label + '</div>' +
-            '<div class="font-semibold">' + p.name + '</div>' +
-            '<div class="text-sm text-gray-700">' + p.shortPitch + '</div>' +
-            '<a href="' + href + '" target="_blank" rel="sponsored nofollow noopener" ' +
-              'class="mt-1 inline-block text-emerald-800 underline">See on Amazon &rarr;</a>' +
-          '</div>'
-        );
+        rows.push(`
+          <article class="surface-elevated group flex flex-col gap-4 p-6 md:flex-row md:items-start">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-moss-100 text-moss-600">
+              ${categoryIcon(label)}
+            </div>
+            <div class="flex-grow">
+              <div class="eyebrow">${label}</div>
+              <h3 class="mt-1 font-display text-[1.25rem] leading-tight text-ink-900" style="font-variation-settings: 'opsz' 24;">
+                ${p.name}
+              </h3>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-ink-700">
+                ${p.shortPitch}
+              </p>
+            </div>
+            <a
+              href="${href}"
+              target="_blank"
+              rel="sponsored nofollow noopener"
+              class="btn btn-primary flex-shrink-0 text-[0.82rem]"
+              style="padding: 0.55rem 1.1rem;"
+            >
+              See on Amazon
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </article>
+        `);
       };
-      pushRow("Filter", r.filter);
-      pushRow("Heater", r.heater);
-      pushRow("Light", r.light);
-      pushRow("Substrate", r.substrate);
-      pushRow("CO₂", r.co2);
-      pushRow("Testing", r.testing);
-      if (r.notes.length) {
-        rows.push(
-          '<div class="mt-4 rounded bg-amber-50 p-3 text-sm text-amber-900">' +
-            '<strong>Notes:</strong>' +
-            '<ul class="list-disc pl-5">' +
-              r.notes.map((n) => '<li>' + n + '</li>').join('') +
-            '</ul>' +
-          '</div>'
-        );
-      }
+      makeCard("Filter", r.filter);
+      makeCard("Heater", r.heater);
+      makeCard("Light", r.light);
+      makeCard("Substrate", r.substrate);
+      makeCard("CO₂", r.co2);
+      makeCard("Testing", r.testing);
       body.innerHTML = rows.join("");
+
+      if (r.notes.length) {
+        notes.innerHTML = `
+          <div class="rounded-xl border border-cream-200 bg-cream-50 p-6">
+            <div class="eyebrow">Notes</div>
+            <ul class="mt-3 space-y-2 text-[0.92rem] leading-relaxed text-ink-700">
+              ${r.notes.map((n) => `
+                <li class="flex gap-3">
+                  <span class="mt-2 inline-block h-1 w-1 flex-shrink-0 rounded-full bg-moss-500"></span>
+                  <span>${n}</span>
+                </li>
+              `).join("")}
+            </ul>
+          </div>
+        `;
+      } else {
+        notes.innerHTML = "";
+      }
+
       results.classList.remove("hidden");
-      results.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        results.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 60);
     });
   </script>
 </BaseLayout>

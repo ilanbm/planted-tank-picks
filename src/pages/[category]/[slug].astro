@@ -61,6 +61,13 @@ const breadcrumbJsonLd = {
     { "@type": "ListItem", position: 3, name: decision.data.h1, item: `https://${siteConfig.domain}/${decision.data.category}/${decision.data.slug}/` },
   ],
 };
+
+const topPick = picks[0];
+const formattedDate = new Date(decision.data.updatedAt).toLocaleDateString("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
 ---
 <BaseLayout
   title={decision.data.title}
@@ -69,136 +76,254 @@ const breadcrumbJsonLd = {
   faqJsonLd={faqJsonLd}
   breadcrumbJsonLd={breadcrumbJsonLd}
 >
-  <nav class="mb-4 text-sm text-emerald-700">
-    <a href="/" class="underline">Home</a> &rsaquo;
-    <a href={`/${decision.data.category}/`} class="underline capitalize">
-      {decision.data.category}
-    </a> &rsaquo;
-    <span>{decision.data.h1}</span>
+  <!-- Breadcrumb -->
+  <nav aria-label="Breadcrumb" class="mb-8 text-[0.82rem] text-ink-500">
+    <ol class="flex flex-wrap items-center gap-2">
+      <li><a href="/" class="link-editorial">Home</a></li>
+      <li aria-hidden="true" class="text-ink-300">/</li>
+      <li><a href={`/${decision.data.category}/`} class="link-editorial capitalize">{decision.data.category}</a></li>
+      <li aria-hidden="true" class="text-ink-300">/</li>
+      <li class="text-ink-500">{decision.data.h1}</li>
+    </ol>
   </nav>
 
-  <h1 class="mb-4 text-3xl font-bold text-emerald-900">{decision.data.h1}</h1>
-
-  <p class="mb-2 text-xs italic text-gray-500">
-    As an Amazon Associate we earn from qualifying purchases.
-  </p>
-
-  <section class="mb-6 rounded border border-emerald-200 bg-emerald-50 p-4">
-    <h2 class="mb-2 text-lg font-semibold text-emerald-900">Quick picks</h2>
-    <ol class="list-decimal pl-5">
-      {picks.slice(0, 3).map((p) => (
-        <li class="mb-2">
-          <strong>{p.name}</strong> — {p.shortPitch}
-          <br />
-          <a
-            href={linkFor(p)}
-            target="_blank"
-            rel="sponsored nofollow noopener"
-            class="text-emerald-800 underline"
-          >
-            See on Amazon &rarr;
-          </a>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="mb-6">
-    <h2 class="mb-3 text-xl font-semibold text-emerald-900">Comparison</h2>
-    <div class="overflow-x-auto">
-      <table class="w-full border-collapse text-sm">
-        <thead class="bg-emerald-100">
-          <tr>
-            <th class="border p-2 text-left">Product</th>
-            <th class="border p-2 text-left">Price band</th>
-            <th class="border p-2 text-left">Key spec</th>
-            <th class="border p-2 text-left">Best for</th>
-          </tr>
-        </thead>
-        <tbody>
-          {picks.map((p) => {
-            const firstSpec = Object.entries(p.specs)[0];
-            return (
-              <tr>
-                <td class="border p-2 font-medium">{p.name}</td>
-                <td class="border p-2">{p.priceBand}</td>
-                <td class="border p-2">
-                  {firstSpec ? `${firstSpec[0]}: ${firstSpec[1]}` : "—"}
-                </td>
-                <td class="border p-2">
-                  {p.fits.tankSizeMinGal ?? "—"}–{p.fits.tankSizeMaxGal ?? "—"} gal
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+  <!-- Article header -->
+  <header>
+    <div class="flex items-center gap-3">
+      <span class="inline-flex h-1.5 w-6 rounded-full bg-moss-500"></span>
+      <span class="eyebrow capitalize">{decision.data.category}</span>
     </div>
-  </section>
+    <h1 class="mt-5 text-[2.25rem] leading-[1.08] md:text-[3rem]">
+      {decision.data.h1}
+    </h1>
+    <p class="mt-4 text-lg leading-relaxed text-ink-700">
+      {decision.data.description}
+    </p>
+    <div class="mt-6 flex items-center gap-4 text-[0.78rem] text-ink-500">
+      <span>Updated {formattedDate}</span>
+      <span aria-hidden="true">&middot;</span>
+      <span class="smallcaps">Amazon Associate</span>
+    </div>
+  </header>
 
-  <section class="mb-6">
-    <h2 class="mb-3 text-xl font-semibold text-emerald-900">Which one for you?</h2>
-    <ul class="space-y-2">
-      {decision.data.decisionTree.map((branch) => {
-        const p = products.find((x) => x.id === branch.pick);
-        return (
-          <li>
-            <strong>If</strong> {branch.condition} &rarr;{" "}
-            {p ? (
-              <a
-                class="text-emerald-800 underline"
-                href={linkFor(p)}
-                target="_blank"
-                rel="sponsored nofollow noopener"
-              >
+  <!-- Top pick spotlight -->
+  {topPick && (
+    <aside class="mt-10 overflow-hidden rounded-[18px] border border-cream-200 bg-cream-100">
+      <div class="flex flex-col gap-0 md:flex-row">
+        <div
+          class="relative flex min-h-[160px] items-center justify-center p-8 md:w-[220px] md:flex-shrink-0"
+          style="background: linear-gradient(135deg, #2d5a42 0%, #3e7355 100%);"
+        >
+          <div class="absolute inset-0 grain opacity-40"></div>
+          <div class="relative text-center text-cream-50">
+            <div class="eyebrow text-[0.62rem] text-cream-50/85">Our pick</div>
+            <svg class="mx-auto mt-3 h-10 w-10 text-cream-50/90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2l2.5 6.5L21 9l-5 4.5 1.5 7L12 17l-5.5 3.5L8 13.5 3 9l6.5-.5L12 2Z" fill="currentColor" fill-opacity="0.25" />
+            </svg>
+          </div>
+        </div>
+        <div class="flex-grow p-7 md:p-8">
+          <h2 class="font-display text-[1.5rem] leading-tight text-ink-900" style="font-variation-settings: 'opsz' 24;">
+            {topPick.name}
+          </h2>
+          <p class="mt-3 text-[1rem] leading-relaxed text-ink-700">
+            {topPick.shortPitch}
+          </p>
+          <div class="mt-5 flex flex-wrap items-center gap-4">
+            <a
+              href={linkFor(topPick)}
+              target="_blank"
+              rel="sponsored nofollow noopener"
+              class="btn btn-primary text-[0.85rem]"
+              style="padding: 0.6rem 1.2rem;"
+            >
+              See on Amazon
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </a>
+            <span class="text-[0.78rem] text-ink-500">
+              {topPick.priceBand} &middot; {topPick.fits.tankSizeMinGal ?? "—"}–{topPick.fits.tankSizeMaxGal ?? "—"} gal
+            </span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  )}
+
+  <!-- All picks list -->
+  {picks.length > 1 && (
+    <section class="mt-14">
+      <div class="eyebrow">Every pick</div>
+      <h2 class="mt-3 text-[1.75rem] leading-tight">The shortlist</h2>
+      <div class="mt-6 space-y-4">
+        {picks.slice(1).map((p, i) => (
+          <article class="surface surface-hover flex flex-col gap-4 p-6 md:flex-row md:items-center">
+            <div class="font-display text-[1.75rem] text-ink-300 md:w-8" style="font-variation-settings: 'opsz' 48;">
+              {String(i + 2).padStart(2, "0")}
+            </div>
+            <div class="flex-grow">
+              <h3 class="font-display text-[1.15rem] leading-tight text-ink-900" style="font-variation-settings: 'opsz' 24;">
                 {p.name}
-              </a>
-            ) : (
-              <span>{branch.pick}</span>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  </section>
+              </h3>
+              <p class="mt-1 text-[0.95rem] leading-relaxed text-ink-700">
+                {p.shortPitch}
+              </p>
+              <div class="mt-2 text-[0.78rem] text-ink-500">
+                {p.priceBand} &middot; {p.fits.tankSizeMinGal ?? "—"}–{p.fits.tankSizeMaxGal ?? "—"} gal
+              </div>
+            </div>
+            <a
+              href={linkFor(p)}
+              target="_blank"
+              rel="sponsored nofollow noopener"
+              class="btn btn-ghost flex-shrink-0 text-[0.82rem]"
+              style="padding: 0.55rem 1.1rem;"
+            >
+              See on Amazon
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
 
-  <article class="prose prose-emerald mb-6">
+  <!-- Decision tree -->
+  {decision.data.decisionTree.length > 0 && (
+    <section class="mt-14">
+      <div class="eyebrow">Which one, in one line</div>
+      <h2 class="mt-3 text-[1.75rem] leading-tight">The decision tree</h2>
+      <div class="mt-6 space-y-3">
+        {decision.data.decisionTree.map((branch) => {
+          const p = products.find((x) => x.id === branch.pick);
+          return (
+            <div class="flex items-baseline gap-4 border-l-2 border-moss-500 bg-moss-100/40 px-5 py-4">
+              <div class="eyebrow flex-shrink-0 text-[0.68rem]">If</div>
+              <div class="flex-grow text-[0.98rem] leading-relaxed text-ink-900">
+                {branch.condition}
+                <span class="mx-2 text-ink-300">→</span>
+                {p ? (
+                  <a
+                    href={linkFor(p)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="font-medium text-moss-700 hover:text-moss-600"
+                  >
+                    {p.name}
+                  </a>
+                ) : (
+                  <span class="font-medium">{branch.pick}</span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  )}
+
+  <!-- Comparison table -->
+  {picks.length > 1 && (
+    <section class="mt-14">
+      <div class="eyebrow">Compared</div>
+      <h2 class="mt-3 text-[1.75rem] leading-tight">Side by side</h2>
+      <div class="mt-6 -mx-6 overflow-x-auto md:mx-0">
+        <div class="min-w-full px-6 md:px-0">
+          <table class="w-full border-collapse text-[0.92rem]">
+            <thead>
+              <tr class="border-b-2 border-ink-900">
+                <th class="px-3 py-3 text-left font-semibold text-ink-900">Product</th>
+                <th class="px-3 py-3 text-left font-semibold text-ink-900">Price</th>
+                <th class="px-3 py-3 text-left font-semibold text-ink-900">Key spec</th>
+                <th class="px-3 py-3 text-left font-semibold text-ink-900">Best for</th>
+              </tr>
+            </thead>
+            <tbody>
+              {picks.map((p) => {
+                const firstSpec = Object.entries(p.specs)[0];
+                return (
+                  <tr class="border-b border-cream-200 hover:bg-cream-100">
+                    <td class="px-3 py-3 font-medium text-ink-900">{p.name}</td>
+                    <td class="px-3 py-3 text-ink-700">{p.priceBand}</td>
+                    <td class="px-3 py-3 text-ink-700">
+                      {firstSpec ? `${firstSpec[0]}: ${firstSpec[1]}` : "—"}
+                    </td>
+                    <td class="px-3 py-3 text-ink-700">
+                      {p.fits.tankSizeMinGal ?? "—"}–{p.fits.tankSizeMaxGal ?? "—"} gal
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Body content from MDX -->
+  <article class="prose prose-lg mt-14 max-w-none text-ink-900
+    prose-headings:font-display prose-headings:tracking-tight
+    prose-h2:text-[1.75rem] prose-h2:mt-12 prose-h2:mb-4
+    prose-h3:text-[1.25rem] prose-h3:mt-8 prose-h3:mb-3
+    prose-p:text-ink-700 prose-p:leading-relaxed
+    prose-a:text-moss-700 prose-a:no-underline hover:prose-a:text-moss-600
+    prose-strong:text-ink-900 prose-strong:font-semibold
+    prose-ul:text-ink-700 prose-li:my-1
+    first-of-type:prose-p:drop-cap first-of-type:prose-p:text-[1.08rem]"
+  >
     <Content />
   </article>
 
+  <!-- FAQ -->
   {decision.data.faqs.length > 0 && (
-    <section class="mb-6">
-      <h2 class="mb-3 text-xl font-semibold text-emerald-900">FAQ</h2>
-      <dl>
+    <section class="mt-14">
+      <div class="eyebrow">Quick answers</div>
+      <h2 class="mt-3 text-[1.75rem] leading-tight">FAQ</h2>
+      <dl class="mt-6 space-y-5">
         {decision.data.faqs.map((f) => (
-          <div class="mb-3">
-            <dt class="font-semibold">{f.q}</dt>
-            <dd class="text-gray-700">{f.a}</dd>
+          <div class="border-b border-cream-200 pb-5">
+            <dt class="font-display text-[1.08rem] leading-snug text-ink-900" style="font-variation-settings: 'opsz' 24;">
+              {f.q}
+            </dt>
+            <dd class="mt-2 text-[0.96rem] leading-relaxed text-ink-700">{f.a}</dd>
           </div>
         ))}
       </dl>
     </section>
   )}
 
+  <!-- Related -->
   {siblings.length > 0 && (
-    <section class="mb-6">
-      <h2 class="mb-3 text-xl font-semibold text-emerald-900">Related picks</h2>
-      <ul class="list-disc pl-6">
+    <section class="mt-14">
+      <div class="eyebrow">Keep reading</div>
+      <h2 class="mt-3 text-[1.75rem] leading-tight">Related picks</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
         {siblings.map((s) => (
-          <li>
-            <a
-              class="text-emerald-800 underline"
-              href={`/${s.data.category}/${s.data.slug}/`}
+          <a
+            href={`/${s.data.category}/${s.data.slug}/`}
+            class="surface surface-hover group flex items-center justify-between p-5"
+          >
+            <div>
+              <div class="eyebrow text-[0.65rem] capitalize">{s.data.category}</div>
+              <div class="mt-1 font-display text-[1.1rem] leading-snug text-ink-900" style="font-variation-settings: 'opsz' 24;">
+                {s.data.h1}
+              </div>
+            </div>
+            <svg
+              class="h-4 w-4 flex-shrink-0 text-ink-500 transition-transform group-hover:translate-x-1 group-hover:text-moss-600"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              aria-hidden="true"
             >
-              {s.data.h1}
-            </a>
-          </li>
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+          </a>
         ))}
-      </ul>
+      </div>
     </section>
   )}
 
-  <p class="text-xs text-gray-500">
-    Last updated {new Date(decision.data.updatedAt).toLocaleDateString()}.
+  <p class="mt-16 text-center text-[0.75rem] text-ink-500">
+    Last updated {formattedDate} &middot; As an Amazon Associate we earn from qualifying purchases.
   </p>
 </BaseLayout>

@@ -5,17 +5,48 @@ const pillars = await getCollection("pillars");
 ---
 <BaseLayout
   title="Planted Tank Guides"
-  description="Deep-dive guides to starting, running, and troubleshooting planted freshwater aquariums."
+  description="Long-form guides to starting, running, and troubleshooting planted freshwater aquariums."
 >
-  <h1 class="mb-4 text-3xl font-bold text-emerald-900">Guides</h1>
-  <ul class="list-disc pl-6">
-    {pillars.map((p) => (
-      <li class="mb-2">
-        <a class="text-emerald-800 underline" href={`/guides/${p.data.slug}/`}>
+  <nav aria-label="Breadcrumb" class="mb-8 text-[0.82rem] text-ink-500">
+    <ol class="flex flex-wrap items-center gap-2">
+      <li><a href="/" class="link-editorial">Home</a></li>
+      <li aria-hidden="true" class="text-ink-300">/</li>
+      <li class="text-ink-500">Guides</li>
+    </ol>
+  </nav>
+
+  <header>
+    <div class="flex items-center gap-3">
+      <span class="inline-flex h-1.5 w-6 rounded-full bg-moss-500"></span>
+      <span class="eyebrow">Long-form guides</span>
+    </div>
+    <h1 class="mt-5 text-[2.5rem] leading-[1.05] md:text-[3.25rem]">
+      The guides.
+    </h1>
+    <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-700">
+      When you want the whole picture, not a single pick.
+    </p>
+  </header>
+
+  <div class="mt-12 grid gap-6 md:grid-cols-2">
+    {pillars.map((p, i) => (
+      <a href={`/guides/${p.data.slug}/`} class="surface surface-hover group p-7">
+        <div class="eyebrow text-[0.65rem]">
+          Guide {String(i + 1).padStart(2, "0")}
+        </div>
+        <h2 class="mt-2 font-display text-[1.5rem] leading-tight text-ink-900" style="font-variation-settings: 'opsz' 24;">
           {p.data.title}
-        </a>
-        <div class="text-sm text-gray-600">{p.data.description}</div>
-      </li>
+        </h2>
+        <p class="mt-3 text-[0.95rem] leading-relaxed text-ink-700">
+          {p.data.description}
+        </p>
+        <span class="mt-5 inline-flex items-center gap-1 text-[0.85rem] font-medium text-moss-600 group-hover:text-moss-700">
+          Read the guide
+          <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+        </span>
+      </a>
     ))}
-  </ul>
+  </div>
 </BaseLayout>

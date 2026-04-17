@@ -2,24 +2,79 @@
 import { siteConfig } from "../config/site-config";
 const year = new Date().getFullYear();
 ---
-<footer class="mt-16 border-t border-emerald-100 bg-emerald-50">
-  <div class="mx-auto max-w-5xl px-4 py-8 text-sm text-emerald-900">
-    <p class="mb-3">
-      <strong>{siteConfig.siteName}</strong> is a participant in the Amazon
-      Services LLC Associates Program, an affiliate advertising program designed
-      to provide a means for sites to earn advertising fees by advertising and
-      linking to Amazon.com. As an Amazon Associate we earn from qualifying
-      purchases.
-    </p>
-    <nav class="flex flex-wrap gap-4">
-      <a href="/about/" class="underline">About</a>
-      <a href="/affiliate-disclosure/" class="underline">Affiliate Disclosure</a>
-      <a href="/privacy/" class="underline">Privacy</a>
-    </nav>
-    <p class="mt-4 text-xs text-emerald-700">
-      &copy; {year} {siteConfig.siteName}. Product picks reflect editorial
-      judgment; we do not test every product personally and update picks
-      periodically.
-    </p>
+<footer class="mt-24 border-t border-cream-200 bg-cream-100">
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
+      <div>
+        <div class="flex items-center gap-3">
+          <svg
+            viewBox="0 0 40 40"
+            class="h-7 w-7 text-moss-600"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M20 34 L20 14" />
+            <path d="M20 14 C14 10 10 12 8 18 C12 22 16 22 20 18" fill="currentColor" fill-opacity="0.12" />
+            <path d="M20 14 C26 10 30 12 32 18 C28 22 24 22 20 18" fill="currentColor" fill-opacity="0.08" />
+            <path d="M20 22 C15 19 12 20 10 25 C14 28 17 28 20 25" fill="currentColor" fill-opacity="0.16" />
+            <path d="M20 22 C25 19 28 20 30 25 C26 28 23 28 20 25" fill="currentColor" fill-opacity="0.12" />
+            <path d="M14 34 L26 34" />
+          </svg>
+          <span class="font-display text-lg text-ink-900">{siteConfig.siteName}</span>
+        </div>
+        <p class="mt-4 max-w-md text-sm leading-relaxed text-ink-700">
+          An opinionated gear guide for planted freshwater aquariums. We write
+          decision frameworks, not top-10 padding. {siteConfig.tagline}.
+        </p>
+      </div>
+
+      <div>
+        <div class="eyebrow mb-3">Explore</div>
+        <ul class="space-y-2 text-sm">
+          <li><a class="link-editorial" href="/calculator">Calculator</a></li>
+          <li><a class="link-editorial" href="/guides/">Guides</a></li>
+          <li><a class="link-editorial" href="/filters/">Filters</a></li>
+          <li><a class="link-editorial" href="/heaters/">Heaters</a></li>
+          <li><a class="link-editorial" href="/lights/">Lights</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="eyebrow mb-3">Gear</div>
+        <ul class="space-y-2 text-sm">
+          <li><a class="link-editorial" href="/substrate/">Substrate</a></li>
+          <li><a class="link-editorial" href="/co2/">CO₂</a></li>
+          <li><a class="link-editorial" href="/testing/">Testing</a></li>
+          <li><a class="link-editorial" href="/plants/">Plants</a></li>
+          <li><a class="link-editorial" href="/accessories/">Accessories</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="eyebrow mb-3">About</div>
+        <ul class="space-y-2 text-sm">
+          <li><a class="link-editorial" href="/about/">About</a></li>
+          <li><a class="link-editorial" href="/affiliate-disclosure/">Affiliate Disclosure</a></li>
+          <li><a class="link-editorial" href="/privacy/">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 rule-hair"></div>
+
+    <div class="mt-6 flex flex-col gap-3 text-xs text-ink-500 md:flex-row md:items-center md:justify-between">
+      <p>
+        &copy; {year} {siteConfig.siteName}. Picks reflect editorial judgment;
+        specs are drawn from manufacturer sources and community consensus.
+      </p>
+      <p class="max-w-xl md:text-right">
+        Amazon Services LLC Associates Program participant. As an Amazon
+        Associate we earn from qualifying purchases.
+      </p>
+    </div>
   </div>
 </footer>

@@ -1,35 +1,38 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+const experienceOptions = [
+  { value: "first",        label: "First tank",      desc: "Starting out — we'll steer you safe" },
+  { value: "some",         label: "Some experience", desc: "A few tanks under the belt" },
+  { value: "experienced",  label: "Experienced",     desc: "Years in the hobby" },
+];
+
 const tankSizes = [
-  { value: 5,   label: "5",   detail: "nano" },
-  { value: 10,  label: "10",  detail: "nano" },
-  { value: 20,  label: "20",  detail: "sweet spot", preferred: true },
-  { value: 29,  label: "29",  detail: "midsize" },
-  { value: 40,  label: "40",  detail: "midsize" },
-  { value: 55,  label: "55",  detail: "large" },
-  { value: 75,  label: "75",  detail: "large" },
-  { value: 125, label: "125+", detail: "big" },
+  { value: "unsure", label: "?",  detail: "not sure" },
+  { value: 5,        label: "5",   detail: "nano" },
+  { value: 10,       label: "10",  detail: "nano" },
+  { value: 20,       label: "20",  detail: "sweet spot" },
+  { value: 29,       label: "29",  detail: "midsize" },
+  { value: 40,       label: "40",  detail: "midsize" },
+  { value: 55,       label: "55",  detail: "large" },
+  { value: 75,       label: "75",  detail: "large" },
+  { value: 125,      label: "125+", detail: "big" },
 ];
 
 const plantingOptions = [
   { value: "low",    label: "Low-tech",    desc: "No CO₂, slow growers" },
   { value: "medium", label: "Medium-tech", desc: "Liquid carbon, mixed plants" },
   { value: "high",   label: "High-tech",   desc: "CO₂ injected, demanding" },
+  { value: "unsure", label: "Not sure yet", desc: "We'll pick a safe default" },
 ];
 
 const livestockOptions = [
-  { value: "community",    label: "Community",    desc: "Tetras, rasboras, corydoras" },
+  { value: "community",    label: "Community",    desc: "Tetras, rasboras, corys" },
   { value: "shrimp",       label: "Shrimp",       desc: "Neocaridina, Caridina" },
-  { value: "betta",        label: "Betta",        desc: "Solo or with peaceful tankmates" },
-  { value: "cichlid",      label: "Cichlid",      desc: "Apistogramma, rams, angelfish" },
-  { value: "species-only", label: "Species-only", desc: "Single-species focus" },
-];
-
-const experienceOptions = [
-  { value: "first",        label: "First tank",      desc: "Starting out" },
-  { value: "some",         label: "Some experience", desc: "A few tanks under the belt" },
-  { value: "experienced",  label: "Experienced",     desc: "Years in the hobby" },
+  { value: "betta",        label: "Betta",        desc: "Solo or with peaceful mates" },
+  { value: "cichlid",      label: "Cichlid",      desc: "Apistos, rams, angels" },
+  { value: "species-only", label: "Species-only", desc: "Single species focus" },
+  { value: "unsure",       label: "Not sure yet", desc: "We'll pick a safe default" },
 ];
 ---
 <BaseLayout
@@ -52,9 +55,9 @@ const experienceOptions = [
         setup.
       </h1>
       <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ink-700">
-        Tell us about your tank. We'll build a full, opinionated gear list —
-        filter, heater, light, substrate, CO₂ (if you need it), and test kit.
-        Each pick comes with a one-line reason.
+        Tell us about your tank — or don't, if you're just exploring. We'll
+        build a full gear list: filter, heater, light, substrate, CO₂ (if you
+        need it), and test kit. Every pick comes with a one-line reason.
       </p>
     </div>
   </section>
@@ -64,31 +67,81 @@ const experienceOptions = [
        ========================================================================== -->
   <section class="mx-auto max-w-4xl px-6 py-14 md:py-20">
     <form id="calc-form" class="space-y-14">
-      <!-- Q1 Tank Size -->
+      <!-- Q1 Experience (now first — anchors downstream defaults) -->
       <fieldset>
         <div class="flex items-baseline gap-3">
           <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">01</span>
           <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
+            Where are you in the hobby?
+          </legend>
+        </div>
+        <p class="mt-2 ml-10 text-sm text-ink-500">This shapes everything else. Beginners get safer picks; experienced keepers get performance-first options.</p>
+
+        <div class="mt-6 ml-10 grid gap-3 md:grid-cols-3">
+          {experienceOptions.map((o) => (
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="experience"
+                value={o.value}
+                class="peer sr-only experience-input"
+                checked={o.value === "some"}
+              />
+              <div class="rounded-xl border border-cream-200 bg-cream-50 p-5 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm">
+                <div class="font-display text-lg text-ink-900" style="font-variation-settings: 'opsz' 24;">
+                  {o.label}
+                </div>
+                <div class="mt-1 text-sm text-ink-500">{o.desc}</div>
+              </div>
+            </label>
+          ))}
+        </div>
+
+        <!-- Beginner nudge (shown when First tank is selected) -->
+        <div id="beginner-note" class="mt-5 ml-10 hidden rounded-xl border border-moss-500 bg-moss-100/60 p-4">
+          <div class="flex gap-3">
+            <svg class="h-5 w-5 flex-shrink-0 text-moss-600 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 8v4M12 16h.01" />
+            </svg>
+            <div class="text-[0.92rem] leading-relaxed text-ink-900">
+              <strong class="font-semibold">Welcome to the hobby.</strong>
+              We pre-selected a forgiving starter setup below: 20 gal, low-tech
+              plants, community fish. Change anything you already know —
+              leave the rest on "Not sure" and we'll pick safely.
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="rule-hair"></div>
+
+      <!-- Q2 Tank Size -->
+      <fieldset>
+        <div class="flex items-baseline gap-3">
+          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">02</span>
+          <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
             How big is your tank?
           </legend>
         </div>
-        <p class="mt-2 ml-10 text-sm text-ink-500">In US gallons.</p>
+        <p class="mt-2 ml-10 text-sm text-ink-500">In US gallons. Not sure yet? Pick the question mark.</p>
 
-        <div class="mt-6 ml-10 grid grid-cols-4 gap-2 md:grid-cols-8">
-          {tankSizes.map((t, i) => (
+        <div class="mt-6 ml-10 grid grid-cols-3 gap-2 md:grid-cols-9">
+          {tankSizes.map((t) => (
             <label class="cursor-pointer">
               <input
                 type="radio"
                 name="tankSizeGal"
                 value={t.value}
-                class="peer sr-only"
-                checked={t.preferred}
+                class="peer sr-only tank-size-input"
+                data-default={t.value === 20 ? "true" : "false"}
+                checked={t.value === 20}
               />
               <div class="flex flex-col items-center justify-center rounded-xl border border-cream-200 bg-cream-50 px-2 py-4 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-moss-500 peer-focus-visible:ring-offset-2">
                 <div class="font-display text-xl text-ink-900" style="font-variation-settings: 'opsz' 24;">
                   {t.label}
                 </div>
-                <div class="mt-1 text-[0.65rem] uppercase tracking-wider text-ink-500">
+                <div class="mt-1 text-[0.62rem] uppercase tracking-wider text-ink-500">
                   {t.detail}
                 </div>
               </div>
@@ -99,27 +152,28 @@ const experienceOptions = [
 
       <div class="rule-hair"></div>
 
-      <!-- Q2 Planting -->
+      <!-- Q3 Planting -->
       <fieldset>
         <div class="flex items-baseline gap-3">
-          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">02</span>
+          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">03</span>
           <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
             How planted is it?
           </legend>
         </div>
         <p class="mt-2 ml-10 text-sm text-ink-500">The more plants, the more light and (often) CO₂ you'll want.</p>
 
-        <div class="mt-6 ml-10 grid gap-3 md:grid-cols-3">
-          {plantingOptions.map((o, i) => (
+        <div class="mt-6 ml-10 grid gap-3 md:grid-cols-4">
+          {plantingOptions.map((o) => (
             <label class="cursor-pointer">
               <input
                 type="radio"
                 name="planting"
                 value={o.value}
-                class="peer sr-only"
+                class="peer sr-only planting-input"
+                data-default={o.value === "medium" ? "true" : "false"}
                 checked={o.value === "medium"}
               />
-              <div class="rounded-xl border border-cream-200 bg-cream-50 p-5 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm">
+              <div class="h-full rounded-xl border border-cream-200 bg-cream-50 p-5 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm">
                 <div class="font-display text-lg text-ink-900" style="font-variation-settings: 'opsz' 24;">
                   {o.label}
                 </div>
@@ -132,24 +186,25 @@ const experienceOptions = [
 
       <div class="rule-hair"></div>
 
-      <!-- Q3 Livestock -->
+      <!-- Q4 Livestock -->
       <fieldset>
         <div class="flex items-baseline gap-3">
-          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">03</span>
+          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">04</span>
           <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
             What lives in there?
           </legend>
         </div>
         <p class="mt-2 ml-10 text-sm text-ink-500">Shrimp need intake protection. Bettas want calm water. Cichlids push bigger filters.</p>
 
-        <div class="mt-6 ml-10 grid gap-3 md:grid-cols-5">
+        <div class="mt-6 ml-10 grid gap-3 md:grid-cols-3 lg:grid-cols-6">
           {livestockOptions.map((o) => (
             <label class="cursor-pointer">
               <input
                 type="radio"
                 name="livestock"
                 value={o.value}
-                class="peer sr-only"
+                class="peer sr-only livestock-input"
+                data-default={o.value === "community" ? "true" : "false"}
                 checked={o.value === "community"}
               />
               <div class="h-full rounded-xl border border-cream-200 bg-cream-50 p-4 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm">
@@ -157,39 +212,6 @@ const experienceOptions = [
                   {o.label}
                 </div>
                 <div class="mt-1 text-[0.8rem] leading-snug text-ink-500">{o.desc}</div>
-              </div>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-
-      <div class="rule-hair"></div>
-
-      <!-- Q4 Experience -->
-      <fieldset>
-        <div class="flex items-baseline gap-3">
-          <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">04</span>
-          <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
-            How experienced are you?
-          </legend>
-        </div>
-        <p class="mt-2 ml-10 text-sm text-ink-500">We steer beginners toward reliability, experienced keepers toward upside.</p>
-
-        <div class="mt-6 ml-10 grid gap-3 md:grid-cols-3">
-          {experienceOptions.map((o) => (
-            <label class="cursor-pointer">
-              <input
-                type="radio"
-                name="experience"
-                value={o.value}
-                class="peer sr-only"
-                checked={o.value === "some"}
-              />
-              <div class="rounded-xl border border-cream-200 bg-cream-50 p-5 transition-all hover:border-moss-500 peer-checked:border-moss-500 peer-checked:bg-moss-100 peer-checked:shadow-sm">
-                <div class="font-display text-lg text-ink-900" style="font-variation-settings: 'opsz' 24;">
-                  {o.label}
-                </div>
-                <div class="mt-1 text-sm text-ink-500">{o.desc}</div>
               </div>
             </label>
           ))}
@@ -234,6 +256,7 @@ const experienceOptions = [
 
   <script>
     import { recommend } from "../data/calculator-rules";
+    import type { CalculatorInput } from "../data/calculator-rules";
     import { amazonUrl, amazonSearchUrl } from "../config/site-config";
     import type { Product } from "../data/products";
 
@@ -242,7 +265,31 @@ const experienceOptions = [
     const body = document.getElementById("results-body") as HTMLElement | null;
     const notes = document.getElementById("results-notes") as HTMLElement | null;
     const summary = document.getElementById("results-summary") as HTMLElement | null;
+    const beginnerNote = document.getElementById("beginner-note") as HTMLElement | null;
 
+    // --- Beginner-mode UX: when "First tank" is selected, nudge defaults.
+    const experienceInputs = document.querySelectorAll<HTMLInputElement>(".experience-input");
+    function setRadioByValue(name: string, value: string) {
+      const el = document.querySelector<HTMLInputElement>(`input[name="${name}"][value="${value}"]`);
+      if (el) el.checked = true;
+    }
+    function applyBeginnerDefaults() {
+      setRadioByValue("tankSizeGal", "20");
+      setRadioByValue("planting", "low");
+      setRadioByValue("livestock", "community");
+    }
+    experienceInputs.forEach((input) => {
+      input.addEventListener("change", () => {
+        if (input.value === "first" && input.checked) {
+          applyBeginnerDefaults();
+          beginnerNote?.classList.remove("hidden");
+        } else if (input.checked) {
+          beginnerNote?.classList.add("hidden");
+        }
+      });
+    });
+
+    // --- Category icon map for result cards
     function categoryIcon(label: string): string {
       const icons: Record<string, string> = {
         Filter:    '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l-1 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 4Z"/><path d="M8 8h8M9 12h6M10 16h4"/></svg>',
@@ -259,24 +306,16 @@ const experienceOptions = [
       e.preventDefault();
       if (!results || !body || !notes || !summary) return;
       const data = new FormData(form);
-      const input = {
-        tankSizeGal: Number(data.get("tankSizeGal")),
-        planting: data.get("planting") as "low" | "medium" | "high",
-        livestock: data.get("livestock") as
-          | "community" | "shrimp" | "betta" | "cichlid" | "species-only",
-        experience: data.get("experience") as "first" | "some" | "experienced",
+      const tankRaw = data.get("tankSizeGal") as string;
+      const input: CalculatorInput = {
+        tankSizeGal: tankRaw === "unsure" ? "unsure" : Number(tankRaw),
+        planting: data.get("planting") as CalculatorInput["planting"],
+        livestock: data.get("livestock") as CalculatorInput["livestock"],
+        experience: data.get("experience") as CalculatorInput["experience"],
       };
       const r = recommend(input);
 
-      // Summary line
-      const livestockLabel: Record<string, string> = {
-        community: "community fish", shrimp: "shrimp", betta: "a betta",
-        cichlid: "cichlids", "species-only": "a species-only build",
-      };
-      const plantingLabel: Record<string, string> = {
-        low: "low-tech", medium: "medium-tech", high: "high-tech",
-      };
-      summary.textContent = `${input.tankSizeGal}-gal · ${plantingLabel[input.planting]} · ${livestockLabel[input.livestock]}`;
+      summary.textContent = r.setupSummary;
       summary.classList.remove("hidden");
 
       const rows: string[] = [];

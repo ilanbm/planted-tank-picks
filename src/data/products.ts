@@ -99,10 +99,10 @@ export const products: Product[] = [
   },
   {
     id: "sponge-filter-dual",
-    name: "Dual Sponge Filter with Air Pump",
-    brand: "Generic",
+    name: "Pawfly Nano Sponge Filter (3-pack)",
+    brand: "Pawfly",
     category: "filter",
-    asin: "B01LXRDZPO",
+    asin: "B098SGW6QS",
     priceBand: "$",
     shortPitch:
       "The shrimp-safe, fry-safe, idiot-proof option. Not pretty, but it works.",

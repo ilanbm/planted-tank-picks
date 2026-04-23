@@ -106,9 +106,10 @@ const livestockOptions = [
             </svg>
             <div class="text-[0.92rem] leading-relaxed text-ink-900">
               <strong class="font-semibold">Welcome to the hobby.</strong>
-              We pre-selected a forgiving starter setup below: 20 gal, low-tech
-              plants, community fish. Change anything you already know —
-              leave the rest on "Not sure" and we'll pick safely.
+              Whether you already own a tank or you're just planning,
+              we've pre-selected a forgiving starter setup below: 20 gal,
+              low-tech plants, community fish. Adjust anything you've
+              already decided — leave the rest as-is and we'll pick safely.
             </div>
           </div>
         </div>
@@ -120,11 +121,22 @@ const livestockOptions = [
       <fieldset>
         <div class="flex items-baseline gap-3">
           <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">02</span>
-          <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
+          <legend
+            id="q2-legend"
+            data-default="How big is your tank?"
+            data-planning="What size are you planning?"
+            class="text-[1.3rem] font-display text-ink-900"
+            style="font-variation-settings: 'opsz' 24;"
+          >
             How big is your tank?
           </legend>
         </div>
-        <p class="mt-2 ml-10 text-sm text-ink-500">In US gallons. Not sure yet? Pick the question mark.</p>
+        <p
+          id="q2-help"
+          data-default="In US gallons. Not sure yet? Pick the question mark."
+          data-planning="In US gallons. A 20 is the first-tank sweet spot — pick what you're planning or tap the ? if unsure."
+          class="mt-2 ml-10 text-sm text-ink-500"
+        >In US gallons. Not sure yet? Pick the question mark.</p>
 
         <div class="mt-6 ml-10 grid grid-cols-3 gap-2 md:grid-cols-9">
           {tankSizes.map((t) => (
@@ -156,7 +168,13 @@ const livestockOptions = [
       <fieldset>
         <div class="flex items-baseline gap-3">
           <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">03</span>
-          <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
+          <legend
+            id="q3-legend"
+            data-default="How planted is it?"
+            data-planning="How planted do you want it?"
+            class="text-[1.3rem] font-display text-ink-900"
+            style="font-variation-settings: 'opsz' 24;"
+          >
             How planted is it?
           </legend>
         </div>
@@ -190,7 +208,13 @@ const livestockOptions = [
       <fieldset>
         <div class="flex items-baseline gap-3">
           <span class="font-display text-2xl text-moss-600" style="font-variation-settings: 'opsz' 24;">04</span>
-          <legend class="text-[1.3rem] font-display text-ink-900" style="font-variation-settings: 'opsz' 24;">
+          <legend
+            id="q4-legend"
+            data-default="What lives in there?"
+            data-planning="What do you want to keep?"
+            class="text-[1.3rem] font-display text-ink-900"
+            style="font-variation-settings: 'opsz' 24;"
+          >
             What lives in there?
           </legend>
         </div>
@@ -267,7 +291,8 @@ const livestockOptions = [
     const summary = document.getElementById("results-summary") as HTMLElement | null;
     const beginnerNote = document.getElementById("beginner-note") as HTMLElement | null;
 
-    // --- Beginner-mode UX: when "First tank" is selected, nudge defaults.
+    // --- Beginner-mode UX: when "First tank" is selected, nudge defaults
+    //     and swap question labels to planning/future tense.
     const experienceInputs = document.querySelectorAll<HTMLInputElement>(".experience-input");
     function setRadioByValue(name: string, value: string) {
       const el = document.querySelector<HTMLInputElement>(`input[name="${name}"][value="${value}"]`);
@@ -278,13 +303,25 @@ const livestockOptions = [
       setRadioByValue("planting", "low");
       setRadioByValue("livestock", "community");
     }
+    function setLabelMode(planning: boolean) {
+      const keys = ["q2-legend", "q3-legend", "q4-legend", "q2-help"];
+      keys.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const next = planning ? el.dataset.planning : el.dataset.default;
+        if (next) el.textContent = next;
+      });
+    }
     experienceInputs.forEach((input) => {
       input.addEventListener("change", () => {
-        if (input.value === "first" && input.checked) {
+        if (!input.checked) return;
+        if (input.value === "first") {
           applyBeginnerDefaults();
           beginnerNote?.classList.remove("hidden");
-        } else if (input.checked) {
+          setLabelMode(true);
+        } else {
           beginnerNote?.classList.add("hidden");
+          setLabelMode(false);
         }
       });
     });

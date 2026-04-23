@@ -36,7 +36,7 @@ export const products: Product[] = [
     name: "Fluval 107 Canister Filter",
     brand: "Fluval",
     category: "filter",
-    asin: "SEARCH:Fluval 107 canister filter",
+    asin: "B07JGLN6XC",
     priceBand: "$$",
     shortPitch:
       "Quiet, reliable canister for 20–30 gallon planted tanks that want clear water and flexible media.",
@@ -58,7 +58,7 @@ export const products: Product[] = [
     name: "Fluval 207 Canister Filter",
     brand: "Fluval",
     category: "filter",
-    asin: "SEARCH:Fluval 207 canister filter",
+    asin: "B07JHG13WP",
     priceBand: "$$",
     shortPitch:
       "The sweet-spot canister for 30–55 gallon planted tanks. Plenty of media, fair price.",
@@ -80,7 +80,7 @@ export const products: Product[] = [
     name: "AquaClear 50 HOB Filter",
     brand: "AquaClear",
     category: "filter",
-    asin: "SEARCH:AquaClear 50 hang on back filter",
+    asin: "B000260FUM",
     priceBand: "$",
     shortPitch:
       "The workhorse hang-on-back filter for 20–50 gallon tanks. Cheap, modular, bulletproof.",
@@ -102,7 +102,7 @@ export const products: Product[] = [
     name: "Dual Sponge Filter with Air Pump",
     brand: "Generic",
     category: "filter",
-    asin: "SEARCH:dual sponge filter aquarium",
+    asin: "B01LXRDZPO",
     priceBand: "$",
     shortPitch:
       "The shrimp-safe, fry-safe, idiot-proof option. Not pretty, but it works.",
@@ -128,7 +128,7 @@ export const products: Product[] = [
     name: "Eheim Jager 100W Heater",
     brand: "Eheim",
     category: "heater",
-    asin: "SEARCH:Eheim Jager 100W heater",
+    asin: "B003SNU1I2",
     priceBand: "$$",
     shortPitch:
       "The heater hobbyists default to when they're tired of heaters failing. 20–30 gallon sweet spot.",
@@ -150,7 +150,7 @@ export const products: Product[] = [
     name: "Eheim Jager 200W Heater",
     brand: "Eheim",
     category: "heater",
-    asin: "SEARCH:Eheim Jager 200W heater",
+    asin: "B00BTN9R2E",
     priceBand: "$$",
     shortPitch:
       "Same reliability as the 100W, sized for 40–65 gallon tanks.",
@@ -172,7 +172,7 @@ export const products: Product[] = [
     name: "Cobalt Neo-Therm 50W Heater",
     brand: "Cobalt",
     category: "heater",
-    asin: "SEARCH:Cobalt Neo-Therm 50W aquarium heater",
+    asin: "B09JQ9NFB8",
     priceBand: "$$",
     shortPitch:
       "Flat, shatter-resistant heater for nano tanks (2.5–10 gallon). Betta-friendly.",
@@ -194,7 +194,7 @@ export const products: Product[] = [
     name: "Fluval Plant 3.0 LED (24–34 inch)",
     brand: "Fluval",
     category: "light",
-    asin: "SEARCH:Fluval Plant 3.0 LED 24 34",
+    asin: "B07BBWSPRC",
     priceBand: "$$$",
     shortPitch:
       "The plant light for people who want an app, programmable sunrise, and enough PAR for most medium-tech setups.",
@@ -216,7 +216,7 @@ export const products: Product[] = [
     name: "Hygger 957 Adjustable LED",
     brand: "Hygger",
     category: "light",
-    asin: "SEARCH:Hygger 957 aquarium LED",
+    asin: "B0785QPXHR",
     priceBand: "$",
     shortPitch:
       "The budget plant light that over-performs its price. For low-tech plants and shrimp tanks.",
@@ -235,10 +235,10 @@ export const products: Product[] = [
   },
   {
     id: "chihiros-wrgb-2",
-    name: "Chihiros WRGB II 60cm",
+    name: "Chihiros WRGB II Pro 60cm",
     brand: "Chihiros",
     category: "light",
-    asin: "SEARCH:Chihiros WRGB II 60cm",
+    asin: "B09YQXLX2T",
     priceBand: "$$$",
     shortPitch:
       "The aquascaper's light. High-tech planted with CO2, red plants, and app color control.",
@@ -260,7 +260,7 @@ export const products: Product[] = [
     name: "Fluval Stratum (Planted Substrate)",
     brand: "Fluval",
     category: "substrate",
-    asin: "SEARCH:Fluval Stratum planted aquarium substrate",
+    asin: "B00JMABYUO",
     priceBand: "$$",
     shortPitch:
       "Porous volcanic substrate that buffers pH down and grows carpet plants well. Easy on shrimp.",
@@ -282,7 +282,7 @@ export const products: Product[] = [
     name: "CaribSea Eco-Complete",
     brand: "CaribSea",
     category: "substrate",
-    asin: "SEARCH:CaribSea Eco-Complete planted aquarium substrate",
+    asin: "B0002DH0QM",
     priceBand: "$$",
     shortPitch:
       "Black, heavy, mineral-rich substrate that doesn't break down. Good for low-to-medium tech.",
@@ -304,7 +304,7 @@ export const products: Product[] = [
     name: "CO2Art Pro-SE Regulator",
     brand: "CO2Art",
     category: "co2",
-    asin: "SEARCH:CO2Art Pro-SE regulator",
+    asin: "B084TVM54D",
     priceBand: "$$$",
     shortPitch:
       "Reliable dual-stage regulator for injected planted tanks. Skip the Chinese knockoffs.",
@@ -326,7 +326,7 @@ export const products: Product[] = [
     name: "API Freshwater Master Test Kit",
     brand: "API",
     category: "testing",
-    asin: "SEARCH:API freshwater master test kit",
+    asin: "B000255NCI",
     priceBand: "$$",
     shortPitch:
       "The default liquid test kit. Cheaper per test than strips, far more accurate.",

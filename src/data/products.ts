@@ -147,16 +147,16 @@ export const products: Product[] = [
   },
   {
     id: "eheim-jager-200w",
-    name: "Eheim Jager 200W Heater",
-    brand: "Eheim",
+    name: "Fluval E200 Electronic Heater",
+    brand: "Fluval",
     category: "heater",
-    asin: "B00BTN9R2E",
+    asin: "B001VMWT6Y",
     priceBand: "$$",
     shortPitch:
-      "Same reliability as the 100W, sized for 40–65 gallon tanks.",
+      "The most accurate 200W heater in independent head-to-head testing. Electronic thermostat, LCD display, for 40–65 gallon tanks.",
     prosConsSummary: {
-      pros: ["Accurate thermostat", "Robust", "Trusted for years"],
-      cons: ["Glass construction fragile", "Higher price than brands like Tetra"],
+      pros: ["Most accurate electronic thermostat", "LCD display shows set + actual temp", "Color-shift alert on temp drift"],
+      cons: ["Higher price than glass heaters", "Occasional low-flow warning if placed in still water"],
     },
     fits: {
       tankSizeMinGal: 40,
@@ -235,16 +235,16 @@ export const products: Product[] = [
   },
   {
     id: "chihiros-wrgb-2",
-    name: "Chihiros WRGB II Pro 60cm",
-    brand: "Chihiros",
+    name: "Week Aqua P600 Pro RGB-UV LED (24\")",
+    brand: "Week Aqua",
     category: "light",
-    asin: "B09YQXLX2T",
+    asin: "B0D8T15DGL",
     priceBand: "$$$",
     shortPitch:
-      "The aquascaper's light. High-tech planted with CO2, red plants, and app color control.",
+      "The aquascaper's light. 90W RGB-UV full spectrum for high-tech planted tanks — CO2 injection, red plants, carpet species.",
     prosConsSummary: {
-      pros: ["Strong PAR", "Vivid color rendering", "Bluetooth programmable"],
-      cons: ["Pricey", "App is clunky", "Needs CO2 or algae wins"],
+      pros: ["Very high PAR (90W)", "RGB-UV full spectrum", "Bluetooth app with dimmer + timer"],
+      cons: ["Premium price", "Needs CO2 or algae wins", "Learning curve on app settings"],
     },
     fits: {
       tankSizeMinGal: 15,

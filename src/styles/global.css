@@ -2,7 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 /* ==========================================================================
-   Design tokens — Planted Tank Gear
+   Design tokens: Planted Tank Gear
    Inspired by: editorial magazines, botanical illustration, aquascape calm
    ========================================================================== */
 
@@ -11,7 +11,7 @@
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Color palette — warm, earthy, calm */
+  /* Color palette: warm, earthy, calm */
   --color-ink-900: #131c19;      /* deep moss, primary text */
   --color-ink-700: #2f3f3a;      /* muted forest */
   --color-ink-500: #5b6f68;      /* stem text */
@@ -26,7 +26,7 @@
   --color-moss-700: #1f4230;     /* darkest moss */
   --color-moss-100: #e6efe9;     /* subtle moss tint */
 
-  --color-coral-500: #d9664c;    /* accent / CTA — kept sparingly */
+  --color-coral-500: #d9664c;    /* accent / CTA, kept sparingly */
   --color-coral-600: #bf4e35;    /* CTA hover */
 
   --color-water-100: #e8f0f0;    /* soft water cyan */
@@ -40,9 +40,6 @@
   --radius-card: 12px;
   --radius-pill: 999px;
 }
-
-/* Import webfonts */
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap");
 
 /* ==========================================================================
    Base
@@ -220,7 +217,7 @@
     background: var(--color-cream-100);
   }
 
-  /* Editorial link style — underline with hover lift */
+  /* Editorial link style: underline with hover lift */
   .link-editorial {
     color: var(--color-ink-900);
     background-image: linear-gradient(var(--color-ink-900), var(--color-ink-900));

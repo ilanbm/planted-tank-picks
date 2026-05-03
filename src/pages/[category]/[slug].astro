@@ -143,7 +143,7 @@ const formattedDate = new Date(decision.data.updatedAt).toLocaleDateString("en-U
               </svg>
             </a>
             <span class="text-[0.78rem] text-ink-500">
-              {topPick.priceBand} &middot; {topPick.fits.tankSizeMinGal ?? "—"}–{topPick.fits.tankSizeMaxGal ?? "—"} gal
+              {topPick.priceBand} &middot; {topPick.fits.tankSizeMinGal ?? "any"} to {topPick.fits.tankSizeMaxGal ?? "any"} gal
             </span>
           </div>
         </div>
@@ -170,7 +170,7 @@ const formattedDate = new Date(decision.data.updatedAt).toLocaleDateString("en-U
                 {p.shortPitch}
               </p>
               <div class="mt-2 text-[0.78rem] text-ink-500">
-                {p.priceBand} &middot; {p.fits.tankSizeMinGal ?? "—"}–{p.fits.tankSizeMaxGal ?? "—"} gal
+                {p.priceBand} &middot; {p.fits.tankSizeMinGal ?? "any"} to {p.fits.tankSizeMaxGal ?? "any"} gal
               </div>
             </div>
             <a
@@ -246,10 +246,10 @@ const formattedDate = new Date(decision.data.updatedAt).toLocaleDateString("en-U
                     <td class="px-3 py-3 font-medium text-ink-900">{p.name}</td>
                     <td class="px-3 py-3 text-ink-700">{p.priceBand}</td>
                     <td class="px-3 py-3 text-ink-700">
-                      {firstSpec ? `${firstSpec[0]}: ${firstSpec[1]}` : "—"}
+                      {firstSpec ? `${firstSpec[0]}: ${firstSpec[1]}` : "n/a"}
                     </td>
                     <td class="px-3 py-3 text-ink-700">
-                      {p.fits.tankSizeMinGal ?? "—"}–{p.fits.tankSizeMaxGal ?? "—"} gal
+                      {p.fits.tankSizeMinGal ?? "any"} to {p.fits.tankSizeMaxGal ?? "any"} gal
                     </td>
                   </tr>
                 );

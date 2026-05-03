@@ -83,7 +83,7 @@ export const products: Product[] = [
     asin: "B000260FUM",
     priceBand: "$",
     shortPitch:
-      "The workhorse hang-on-back filter for 20–50 gallon tanks. Cheap, modular, bulletproof.",
+      "The workhorse hang-on-back filter for 20–50 gallon tanks. Affordable, modular, and easy to keep running.",
     prosConsSummary: {
       pros: ["Huge media basket", "Adjustable flow", "Parts available forever"],
       cons: ["Noisier than canisters", "Needs priming after power loss"],
@@ -105,7 +105,7 @@ export const products: Product[] = [
     asin: "B098SGW6QS",
     priceBand: "$",
     shortPitch:
-      "The shrimp-safe, fry-safe, idiot-proof option. Not pretty, but it works.",
+      "The shrimp-safe, fry-safe option for simple tanks. Not pretty, but dependable.",
     prosConsSummary: {
       pros: ["Safe for shrimp and fry", "Near-impossible to break", "Cheap"],
       cons: [
@@ -307,7 +307,7 @@ export const products: Product[] = [
     asin: "B084TVM54D",
     priceBand: "$$$",
     shortPitch:
-      "Reliable dual-stage regulator for injected planted tanks. Skip the Chinese knockoffs.",
+      "Reliable dual-stage regulator for injected planted tanks where steady output matters more than saving a few dollars.",
     prosConsSummary: {
       pros: ["Dual-stage (no end-of-tank-dump)", "Solenoid included", "Good support"],
       cons: ["Expensive vs Amazon generics", "Still needs a CO2 tank and diffuser"],

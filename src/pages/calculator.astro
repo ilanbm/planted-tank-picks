@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const experienceOptions = [
-  { value: "first",        label: "First tank",      desc: "Starting out — we'll steer you safe" },
+  { value: "first",        label: "First tank",      desc: "Starting out, and we'll steer you safe" },
   { value: "some",         label: "Some experience", desc: "A few tanks under the belt" },
   { value: "experienced",  label: "Experienced",     desc: "Years in the hobby" },
 ];
@@ -37,7 +37,7 @@ const livestockOptions = [
 ---
 <BaseLayout
   title="Planted Tank Setup Calculator"
-  description="Four questions. A full equipment setup for your exact tank — filter, heater, light, substrate, CO₂, and test kit."
+  description="Four questions. A full equipment setup for your exact tank: filter, heater, light, substrate, CO₂, and test kit."
   width="wide"
 >
   <!-- ==========================================================================
@@ -55,7 +55,7 @@ const livestockOptions = [
         setup.
       </h1>
       <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ink-700">
-        Tell us about your tank — or don't, if you're just exploring. We'll
+        Tell us about your tank, or don't if you're just exploring. We'll
         build a full gear list: filter, heater, light, substrate, CO₂ (if you
         need it), and test kit. Every pick comes with a one-line reason.
       </p>
@@ -109,7 +109,7 @@ const livestockOptions = [
               Whether you already own a tank or you're just planning,
               we've pre-selected a forgiving starter setup below: 20 gal,
               low-tech plants, community fish. Adjust anything you've
-              already decided — leave the rest as-is and we'll pick safely.
+              already decided. Leave the rest as-is and we'll pick safely.
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@ const livestockOptions = [
         <p
           id="q2-help"
           data-default="In US gallons. Not sure yet? Pick the question mark."
-          data-planning="In US gallons. A 20 is the first-tank sweet spot — pick what you're planning or tap the ? if unsure."
+          data-planning="In US gallons. A 20 is the first-tank sweet spot. Pick what you're planning or tap the ? if unsure."
           class="mt-2 ml-10 text-sm text-ink-500"
         >In US gallons. Not sure yet? Pick the question mark.</p>
 

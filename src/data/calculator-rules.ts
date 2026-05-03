@@ -37,7 +37,7 @@ function resolve(input: CalculatorInput): { resolved: ResolvedInput; substituted
 
   if (input.tankSizeGal === "unsure") {
     substituted.push(
-      `We defaulted to a ${SAFE_STARTER.tankSizeGal}-gallon tank — the most forgiving size for a first build.`,
+      `We defaulted to a ${SAFE_STARTER.tankSizeGal}-gallon tank, the most forgiving size for a first build.`,
     );
   } else {
     resolved.tankSizeGal = input.tankSizeGal;
@@ -45,7 +45,7 @@ function resolve(input: CalculatorInput): { resolved: ResolvedInput; substituted
 
   if (input.planting === "unsure") {
     substituted.push(
-      "We defaulted to low-tech planting (no CO₂, hardy plants) — the easiest way to succeed with plants.",
+      "We defaulted to low-tech planting (no CO₂, hardy plants), the easiest way to succeed with plants.",
     );
   } else {
     resolved.planting = input.planting;
@@ -53,7 +53,7 @@ function resolve(input: CalculatorInput): { resolved: ResolvedInput; substituted
 
   if (input.livestock === "unsure") {
     substituted.push(
-      "We defaulted to a community setup (tetras, rasboras, corys) — the most flexible starter livestock.",
+      "We defaulted to a community setup (tetras, rasboras, corys), the most flexible starter livestock.",
     );
   } else {
     resolved.livestock = input.livestock;

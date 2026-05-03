@@ -241,7 +241,7 @@ export const products: Product[] = [
     asin: "B0D8T15DGL",
     priceBand: "$$$",
     shortPitch:
-      "The aquascaper's light. 90W RGB-UV full spectrum for high-tech planted tanks — CO2 injection, red plants, carpet species.",
+      "The aquascaper's light. 90W RGB-UV full spectrum for high-tech planted tanks: CO2 injection, red plants, carpet species.",
     prosConsSummary: {
       pros: ["Very high PAR (90W)", "RGB-UV full spectrum", "Bluetooth app with dimmer + timer"],
       cons: ["Premium price", "Needs CO2 or algae wins", "Learning curve on app settings"],
